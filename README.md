@@ -232,7 +232,7 @@ dual.commit.enabled = true
 partition.assignment.strategy = "range"
 ```
 
-#### Consumer Configuration
+#### Producer Configuration
 
 This is the list of configurations supported by the producer:
 
