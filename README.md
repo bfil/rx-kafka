@@ -193,9 +193,7 @@ kafka {
 }
 ```
 
-Please note that the configuration values support various types of configuration, it's easier to tell from the configuration which key is supposed to be a duration or a buffer size for example, for more details look at the lists below.
-
-**Please Note**: some configuration keys are different from the kafka ones, for example `queue.buffering.max.messages` is `queue.buffering.max-messages` instead, or the `.ms` suffix is not used to configure durations.
+**Please Note**: the configuration values support various types of configuration, it's easier to tell from the configuration which key is supposed to be a duration or a buffer size for example. For this reason, some configuration keys are different from the core Kafka ones, for example `queue.buffering.max.messages` is `queue.buffering.max-messages` instead, or the `.ms` suffix is not used to configure durations.
 
 #### Consumer Configuration
 
