@@ -73,8 +73,10 @@ class RxKafkaJson4sSpec extends KafkaSpec with JsonSupport {
       log.info("JSON Rx Producer -> JSON Rx Consumer")
 
       implicit val json4sFormats = DefaultFormats
+      
+      val consumer = KafkaConsumer(JsonTestTopic)
 
-      val observable = KafkaConsumer(JsonTestTopic).toObservable
+      val observable = consumer.toObservable
       val observer = KafkaProducer(JsonTestTopic).toObserver
 
       sendMessages { i =>
@@ -83,6 +85,7 @@ class RxKafkaJson4sSpec extends KafkaSpec with JsonSupport {
 
       val receivedMessages = receiveMessages(observable)
 
+      consumer.close
       observer.onCompleted
 
       receivedMessages.length === numMessages

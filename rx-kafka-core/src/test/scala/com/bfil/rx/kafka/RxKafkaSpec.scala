@@ -67,8 +67,10 @@ class RxKafkaSpec extends KafkaSpec {
     "consume all messages published by an rx observer" in new WithEmbeddedKafkaTopics {
 
       log.info("Rx Producer -> Rx Consumer")
+      
+      val consumer = KafkaConsumer(TestTopic)
 
-      val observable = KafkaConsumer(TestTopic).toObservable
+      val observable = consumer.toObservable
       val observer = KafkaProducer(TestTopic).toObserver
 
       sendMessages { i =>
@@ -77,6 +79,7 @@ class RxKafkaSpec extends KafkaSpec {
 
       val receivedMessages = receiveMessages(observable)
 
+      consumer.close
       observer.onCompleted
 
       receivedMessages.length === numMessages
