@@ -25,7 +25,7 @@ object Dependencies {
     "org.apache.commons" % "commons-io" % "1.3.2",
     "com.typesafe" % "config" % "1.2.1",
     "io.reactivex" %% "rxscala" % "0.23.1",
-    "com.bfil" %% "specs2-kafka" % "0.2.0-SNAPSHOT" % "test",
+    "com.bfil" %% "specs2-kafka" % "0.2.0" % "test",
     "org.specs2" %% "specs2-core" % "2.4.17" % "test",
     "org.specs2" %% "specs2-mock" % "2.4.17" % "test",
     "org.mockito" % "mockito-all" % "1.10.19" % "test",
@@ -33,7 +33,7 @@ object Dependencies {
 
   def json4s(scalaVersion: String) = Seq(
     "org.json4s" %% "json4s-native" % "3.2.11",
-    "com.bfil" %% "specs2-kafka" % "0.2.0-SNAPSHOT" % "test",
+    "com.bfil" %% "specs2-kafka" % "0.2.0" % "test",
     "org.specs2" %% "specs2-core" % "2.4.17" % "test",
     "org.specs2" %% "specs2-mock" % "2.4.17" % "test",
     "org.mockito" % "mockito-all" % "1.10.19" % "test",
