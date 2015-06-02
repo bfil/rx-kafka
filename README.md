@@ -1,6 +1,9 @@
 RxKafka
 =======
 
+[![Build Status](https://snap-ci.com/bfil/rx-kafka/branch/master/build_image)](https://snap-ci.com/bfil/rx-kafka/branch/master)
+[![Codacy Badge](https://www.codacy.com/project/badge/78b35cfad9f44d209ed009fe6d7988a9)](https://www.codacy.com/app/bfil/rx-kafka)
+
 This library provides a simple way to create Kafka consumers and producers, it uses [RxScala](https://github.com/ReactiveX/RxScala) under the hood, and provides the ability to turn consumers and producers into `RxScala`'s observables and observers.
 
 Setting up the dependencies
