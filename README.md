@@ -1,7 +1,6 @@
 RxKafka
 =======
 
-[![Build Status](https://snap-ci.com/bfil/rx-kafka/branch/master/build_image)](https://snap-ci.com/bfil/rx-kafka/branch/master)
 [![Codacy Badge](https://www.codacy.com/project/badge/78b35cfad9f44d209ed009fe6d7988a9)](https://www.codacy.com/app/bfil/rx-kafka)
 
 This library provides a simple way to create Kafka consumers and producers, it uses [RxScala](https://github.com/ReactiveX/RxScala) under the hood, and provides the ability to turn consumers and producers into `RxScala`'s observables and observers.
@@ -9,13 +8,15 @@ This library provides a simple way to create Kafka consumers and producers, it u
 Setting up the dependencies
 ---------------------------
 
-__RxKafka__ is available at my [Nexus Repository](http://nexus.b-fil.com/nexus/content/groups/public/), and it is cross compiled and published for both Scala 2.10 and 2.11.
+__RxKafka__ is available on `Maven Central` (since version `0.2.0`), and it is cross compiled and published for Scala 2.12 and 2.11.
+
+*Older artifacts versions are not available anymore due to the shutdown of my self-hosted Nexus Repository in favour of Bintray*
 
 Using SBT, add the following dependency to your build file:
 
 ```scala
 libraryDependencies ++= Seq(
-  "com.bfil" %% "rx-kafka-core" % "0.1.0"
+  "io.bfil" %% "rx-kafka-core" % "0.2.0"
 )
 ```
 
@@ -23,26 +24,14 @@ Include the following module if you need JSON serialization (it uses [Json4s](ht
 
 ```scala
 libraryDependencies ++= Seq(
-  "com.bfil" %% "rx-kafka-json4s" % "0.1.0"
+  "io.bfil" %% "rx-kafka-json4s" % "0.2.0"
 )
 ```
 
-Don't forget to add the following resolver:
+If you have issues resolving the dependency, you can add the following resolver:
 
 ```scala
-resolvers += "BFil Nexus Releases" at "http://nexus.b-fil.com/nexus/content/repositories/releases/"
-```
-
-### Using snapshots
-
-If you need a snapshot dependency:
-
-```scala
-libraryDependencies ++= Seq(
-  "com.bfil" %% "rx-kafka-core" % "0.2.0-SNAPSHOT"
-)
-
-resolvers += "BFil Nexus Snapshots" at "http://nexus.b-fil.com/nexus/content/repositories/snapshots/";
+resolvers += Resolver.bintrayRepo("bfil", "maven")
 ```
 
 Usage
@@ -191,16 +180,14 @@ kafka {
 		zookeeper.connect = "localhost:2181"
 	}
 	producer {
-		metadata.broker.list = "localhost:9092"
+		bootstrap.servers = "localhost:9092"
 	}
 }
 ```
 
-**Please Note**: the configuration values support various types of configuration, it's easier to tell from the configuration which key is supposed to be a duration or a buffer size for example. For this reason, some configuration keys are different from the core Kafka ones, for example `queue.buffering.max.messages` is `queue.buffering.max-messages` instead, or the `.ms` suffix is not used to configure durations.
+**Please Note**: the configuration values support different types depending on the configuration, for durations or buffer sizes for example the `.ms` and `.bytes` suffixes are not necessary and the configuration allows to specify the actual unit.
 
-#### Consumer Configuration
-
-This is the list of configurations supported by the consumer:
+For example, in a consumer you should specify configuration values like so:
 
 ```
 group.id = "default"
@@ -210,53 +197,9 @@ socket.receive.buffer = 64B
 fetch.message.max = 1M
 num.consumer.fetchers = 1
 auto.commit.enable = true
-auto.commit.interval = 60 seconds
-queued.max.message.chunks = 2
-rebalance.max.retries = 4
-fetch.min.bytes = 1
-fetch.wait.max = 100 millis
-rebalance.backoff = 2 seconds
-refresh.leader.backoff = 200 millis
-auto.offset.reset = "largest"
-consumer.timeout = infinite
-exclude.internal.topics = true
-partition.assignment.strategy = "range"
-client.id = ${kafka.consumer.group.id}
-zookeeper.session.timeout = 6 seconds
-zookeeper.connection.timeout = 6 seconds
-zookeeper.sync.time = 2 seconds
-offsets.storage = "zookeeper"
-offsets.channel.backoff = 1 second
-offsets.channel.socket.timeout = 10 seconds
-offsets.commit.max.retries = 5
-dual.commit.enabled = true
-partition.assignment.strategy = "range"
 ```
 
-#### Producer Configuration
-
-This is the list of configurations supported by the producer:
-
-```
-metadata.broker.list = "localhost:9092"
-request.timeout = 10 seconds
-request.required.acks = 0
-producer.type = "sync"
-serializer.class = "kafka.serializer.DefaultEncoder"
-key.serializer.class = ${kafka.producer.serializer.class}
-partitioner.class = "kafka.producer.DefaultPartitioner"
-compression.codec = "none"
-compressed.topics = "null"
-message.send.max.retries = 3
-retry.backoff = 100 millis
-topic.metadata.refresh.interval = 600 seconds
-queue.buffering.max = 5 seconds
-queue.buffering.max-messages = 10000
-queue.enqueue.timeout = Inf
-batch.num.messages = 200
-send.buffer = 100B
-client.id = ""
-```
+For the full list of configurations refer to the Kafka documentation for the [Old Consumer](https://kafka.apache.org/0102/documentation.html#oldconsumerconfigs) and the [Producer](https://kafka.apache.org/0102/documentation.html#producerconfigs)
 
 #### Custom Consumers / Producers Configuration
 
@@ -332,7 +275,7 @@ License
 
 This software is licensed under the Apache 2 license, quoted below.
 
-Copyright © 2015 Bruno Filippone <http://b-fil.com>
+Copyright © 2015-2017 Bruno Filippone <http://bfil.io>
 
 Licensed under the Apache License, Version 2.0 (the "License"); you may not
 use this file except in compliance with the License. You may obtain a copy of

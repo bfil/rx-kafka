@@ -1,0 +1,10 @@
+Version 0.2.0 (2017-12-26)
+--------------------------
+- renamed organization and packages from com.bfil to io.bfil
+- published the library to Bintray
+- updated Kafka to 0.10.2.1
+
+
+Version 0.1.0 (2015-03-15)
+--------------------------
+first public release
